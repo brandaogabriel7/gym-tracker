@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Exercise {
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  muscleGroup  String   @map("muscle_group")
+  trackingType String   @default("weight") @map("tracking_type") // "weight" | "bodyweight" | "timed"
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  workoutExercises  WorkoutExercise[]
+  templateExercises TemplateExercise[]
+
+  @@map("exercises")
+}
+
+model Workout {
+  id              Int       @id @default(autoincrement())
+  name            String
+  notes           String?
+  performedAt     DateTime  @default(now()) @map("performed_at")
+  durationMinutes Int?      @map("duration_minutes")
+  templateId      Int?      @map("template_id")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  template         Template?         @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  workoutExercises WorkoutExercise[]
+
+  @@map("workouts")
+}
+
+model WorkoutExercise {
+  id         Int @id @default(autoincrement())
+  workoutId  Int @map("workout_id")
+  exerciseId Int @map("exercise_id")
+  order      Int
+
+  workout  Workout  @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+  exercise Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  sets     Set[]
+
+  @@map("workout_exercises")
+}
+
+model Set {
+  id                Int      @id @default(autoincrement())
+  workoutExerciseId Int      @map("workout_exercise_id")
+  setNumber         Int      @map("set_number")
+  reps              Int
+  weight            Float
+  restSeconds       Int?     @map("rest_seconds")
+  completed         Boolean  @default(true)
+
+  workoutExercise WorkoutExercise @relation(fields: [workoutExerciseId], references: [id], onDelete: Cascade)
+
+  @@map("sets")
+}
+
+model Template {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  workouts          Workout[]
+  templateExercises TemplateExercise[]
+
+  @@map("templates")
+}
+
+model TemplateExercise {
+  id            Int   @id @default(autoincrement())
+  templateId    Int   @map("template_id")
+  exerciseId    Int   @map("exercise_id")
+  order         Int
+  defaultSets   Int   @default(3) @map("default_sets")
+  defaultReps   Int   @default(10) @map("default_reps")
+  defaultWeight Float @default(0) @map("default_weight")
+
+  template Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  exercise Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  @@map("template_exercises")
+}

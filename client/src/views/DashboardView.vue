@@ -4,6 +4,7 @@ import { useToast } from 'primevue/usetoast';
 import Card from 'primevue/card';
 import Select from 'primevue/select';
 import { Line, Bar, Doughnut } from 'vue-chartjs';
+import { format } from 'date-fns';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -152,7 +153,7 @@ async function fetchProgression() {
     progressionLabel.value = labels[tt] || 'Peso (kg)';
 
     progressionChartData.value = {
-      labels: points.map((d) => d.date || d.label),
+      labels: points.map((d) => d.date ? format(new Date(d.date), 'dd/MM/yyyy') : d.label),
       datasets: [
         {
           label: datasetLabels[tt] || 'Peso Maximo',

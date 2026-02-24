@@ -20,8 +20,8 @@ const items = [
   <div class="layout">
     <Menubar :model="items">
       <template #start>
-        <span class="font-bold text-xl mr-4" style="cursor: pointer" @click="router.push('/')">
-          <i class="pi pi-bolt mr-2"></i>Gym Tracker
+        <span class="font-bold text-xl mr-4" style="cursor: pointer; color: #fff;" @click="router.push('/')">
+          <i class="pi pi-bolt" style="margin-right: 0.5rem; color: #38bdf8;"></i>Gym Tracker
         </span>
       </template>
     </Menubar>

@@ -149,17 +149,17 @@ onMounted(fetchExercises);
     <p v-else-if="!loading" class="text-center text-gray-500 mt-8">Nenhum exercício cadastrado.</p>
 
     <Dialog v-model:visible="dialogVisible" :header="editingExercise ? 'Editar Exercício' : 'Novo Exercício'" modal :style="{ width: '450px' }">
-      <div class="flex flex-col gap-4 mt-2">
-        <div class="flex flex-col gap-2">
-          <label for="name">Nome</label>
+      <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1rem;">
+        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+          <label for="name" class="font-medium">Nome</label>
           <InputText id="name" v-model="form.name" placeholder="Nome do exercício" />
         </div>
-        <div class="flex flex-col gap-2">
-          <label for="muscleGroup">Grupo Muscular</label>
+        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+          <label for="muscleGroup" class="font-medium">Grupo Muscular</label>
           <Select id="muscleGroup" v-model="form.muscleGroup" :options="muscleGroupOptions" placeholder="Selecione" />
         </div>
-        <div class="flex flex-col gap-2">
-          <label for="trackingType">Tipo de Medição</label>
+        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+          <label for="trackingType" class="font-medium">Tipo de Medição</label>
           <Select id="trackingType" v-model="form.trackingType" :options="trackingTypeOptions" optionLabel="label" optionValue="value" />
         </div>
       </div>

@@ -223,18 +223,18 @@ onMounted(async () => {
       modal
       :style="{ width: '650px' }"
     >
-      <div class="flex flex-col gap-4 mt-2">
-        <div class="flex flex-col gap-2">
-          <label for="tpl-name">Nome</label>
+      <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1rem;">
+        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+          <label for="tpl-name" class="font-medium">Nome</label>
           <InputText id="tpl-name" v-model="form.name" placeholder="Nome do template" />
         </div>
 
-        <div class="flex flex-col gap-2">
-          <label for="tpl-desc">Descricao</label>
+        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+          <label for="tpl-desc" class="font-medium">Descricao</label>
           <Textarea id="tpl-desc" v-model="form.description" rows="3" placeholder="Descricao do template" />
         </div>
 
-        <div class="border-t pt-4">
+        <div style="border-top: 1px solid #e2e8f0; padding-top: 1.5rem;">
           <h3 class="text-lg font-semibold mb-3">Exercicios</h3>
 
           <div class="flex gap-2 mb-4">
@@ -258,17 +258,17 @@ onMounted(async () => {
               <span class="font-medium">{{ exercise.order }}. {{ exercise.exerciseName }}</span>
               <Button icon="pi pi-trash" severity="danger" size="small" text @click="removeExercise(idx)" />
             </div>
-            <div class="flex gap-3 flex-wrap">
-              <div class="flex flex-col gap-1">
-                <label class="text-sm">Series</label>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+              <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                <label style="font-size: 0.875rem;">Series</label>
                 <InputNumber v-model="exercise.defaultSets" :min="0" placeholder="0" class="w-24" />
               </div>
-              <div class="flex flex-col gap-1">
-                <label class="text-sm">Reps</label>
+              <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                <label style="font-size: 0.875rem;">Reps</label>
                 <InputNumber v-model="exercise.defaultReps" :min="0" placeholder="0" class="w-24" />
               </div>
-              <div class="flex flex-col gap-1">
-                <label class="text-sm">Peso (kg)</label>
+              <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                <label style="font-size: 0.875rem;">Peso (kg)</label>
                 <InputNumber v-model="exercise.defaultWeight" :min="0" :minFractionDigits="0" :maxFractionDigits="2" placeholder="0" class="w-24" />
               </div>
             </div>

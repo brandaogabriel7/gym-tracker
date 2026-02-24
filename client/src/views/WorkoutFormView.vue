@@ -161,36 +161,34 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
-    <div class="flex justify-between items-center mb-4">
-      <h1 class="text-2xl font-bold">{{ isEdit ? 'Editar Treino' : 'Novo Treino' }}</h1>
-      <Button label="Voltar" icon="pi pi-arrow-left" severity="secondary" @click="router.back()" />
-    </div>
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-2xl font-bold mb-2">{{ isEdit ? 'Editar Treino' : 'Novo Treino' }}</h1>
+    <Button label="Voltar" icon="pi pi-arrow-left" severity="secondary" outlined size="small" class="mb-6" @click="router.back()" />
 
     <div v-if="loading" class="text-center py-8">Carregando...</div>
 
-    <form v-else @submit.prevent="handleSubmit" class="flex flex-col gap-4">
-      <div class="flex flex-col gap-2">
-        <label for="name">Nome</label>
+    <form v-else @submit.prevent="handleSubmit" style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+        <label for="name" class="font-medium">Nome</label>
         <InputText id="name" v-model="form.name" placeholder="Nome do treino" />
       </div>
 
-      <div class="flex flex-col gap-2">
-        <label for="performedAt">Data/Hora</label>
+      <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+        <label for="performedAt" class="font-medium">Data/Hora</label>
         <InputText id="performedAt" v-model="form.performedAt" type="datetime-local" />
       </div>
 
-      <div class="flex flex-col gap-2">
-        <label for="duration">Duracao (minutos)</label>
-        <InputNumber id="duration" v-model="form.durationMinutes" placeholder="Ex: 60" :min="0" />
+      <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+        <label for="duration" class="font-medium">Duracao (minutos)</label>
+        <InputNumber id="duration" v-model="form.durationMinutes" placeholder="Ex: 60" :min="0" class="w-full" />
       </div>
 
-      <div class="flex flex-col gap-2">
-        <label for="notes">Notas</label>
+      <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+        <label for="notes" class="font-medium">Notas</label>
         <Textarea id="notes" v-model="form.notes" rows="3" placeholder="Observacoes sobre o treino" />
       </div>
 
-      <div class="border-t pt-4 mt-2">
+      <div style="border-top: 1px solid #e2e8f0; padding-top: 1.5rem; margin-top: 0.5rem;">
         <h2 class="text-xl font-semibold mb-3">Exercicios</h2>
 
         <div class="flex gap-2 mb-4">
@@ -224,33 +222,33 @@ onMounted(async () => {
           </div>
 
           <div class="overflow-x-auto">
-            <table class="w-full text-sm">
+            <table style="width: 100%; font-size: 0.875rem; border-collapse: separate; border-spacing: 0.5rem;">
               <thead>
-                <tr class="text-left">
-                  <th class="px-2 py-1">Serie</th>
-                  <th class="px-2 py-1">{{ exercise.trackingType === 'timed' ? 'Tempo (s)' : 'Reps' }}</th>
-                  <th v-if="exercise.trackingType === 'weight'" class="px-2 py-1">Peso (kg)</th>
-                  <th class="px-2 py-1">Descanso (s)</th>
-                  <th class="px-2 py-1">Feito</th>
-                  <th class="px-2 py-1"></th>
+                <tr style="text-align: left;">
+                  <th style="padding: 0.25rem 0.5rem;">Serie</th>
+                  <th style="padding: 0.25rem 0.5rem;">{{ exercise.trackingType === 'timed' ? 'Tempo (s)' : 'Reps' }}</th>
+                  <th v-if="exercise.trackingType === 'weight'" style="padding: 0.25rem 0.5rem;">Peso (kg)</th>
+                  <th style="padding: 0.25rem 0.5rem;">Descanso (s)</th>
+                  <th style="padding: 0.25rem 0.5rem;">Feito</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(set, setIdx) in exercise.sets" :key="setIdx">
-                  <td class="px-2 py-1 font-medium">{{ set.setNumber }}</td>
-                  <td class="px-2 py-1">
+                  <td style="padding: 0.25rem 0.5rem; font-weight: 500;">{{ set.setNumber }}</td>
+                  <td style="padding: 0.25rem 0.5rem;">
                     <InputNumber v-model="set.reps" :min="0" :placeholder="exercise.trackingType === 'timed' ? 'seg' : '0'" class="w-20" />
                   </td>
-                  <td v-if="exercise.trackingType === 'weight'" class="px-2 py-1">
+                  <td v-if="exercise.trackingType === 'weight'" style="padding: 0.25rem 0.5rem;">
                     <InputNumber v-model="set.weight" :min="0" :minFractionDigits="0" :maxFractionDigits="2" placeholder="0" class="w-24" />
                   </td>
-                  <td class="px-2 py-1">
+                  <td style="padding: 0.25rem 0.5rem;">
                     <InputNumber v-model="set.restSeconds" :min="0" placeholder="0" class="w-20" />
                   </td>
-                  <td class="px-2 py-1">
+                  <td style="padding: 0.25rem 0.5rem;">
                     <Checkbox v-model="set.completed" :binary="true" />
                   </td>
-                  <td class="px-2 py-1">
+                  <td style="padding: 0.25rem 0.5rem;">
                     <Button
                       icon="pi pi-times"
                       severity="danger"
@@ -277,7 +275,7 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div class="flex gap-2 justify-end mt-4">
+      <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; border-top: 1px solid #e2e8f0; padding-top: 1rem;">
         <Button label="Cancelar" severity="secondary" @click="router.back()" />
         <Button
           :label="isEdit ? 'Salvar Alteracoes' : 'Criar Treino'"
